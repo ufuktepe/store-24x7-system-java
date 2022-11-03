@@ -1,6 +1,6 @@
 # Store 24x7 System
 
-Implemented a 24x7 Store System utilizing the following design patterns:
+Implemented a 24x7 Store Software System utilizing the following design patterns:
 
 - Observer Pattern
 
