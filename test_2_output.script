@@ -1,0 +1,695 @@
+#***********************************************
+# Author     :  Burak Ufuktepe
+# File       :  test_2.script
+# Assignment :  4
+# Notes      :  Authentication Service Tests for Exception Handling
+#***********************************************
+# --- CREATE LEDGER ---
+create-ledger ledger description "ledger 2021" seed "harvard"
+Account created for master.
+Ledger created successfully.
+
+# --- LOGIN AS ROOT USER ---
+login root password Default.1234
+root logged in.
+
+# --- CREATE PERMISSIONS ---
+define-permission CREATE_ENTITLEMENT name "Create Entitlement" description "Create Entitlements in Authentication Service"
+create_entitlement created.
+
+define-permission CREATE_USER name "Create User" description "Create Users in Authentication Service"
+create_user created.
+
+define-permission CREATE_RESOURCE name "Create Resource" description "Create Resource in Authentication Service"
+create_resource created.
+
+define-permission READ_ENTITLEMENT name "Read Entitlement" description "Read Entitlements in Authentication Service"
+read_entitlement created.
+
+define-permission READ_USER name "Read User" description "Read Users in Authentication Service"
+read_user created.
+
+define-permission READ_RESOURCE name "Read Resource" description "Read Resource in Authentication Service"
+read_resource created.
+
+define-permission UPDATE_ENTITLEMENT name "Update Entitlement" description "Update Entitlements in Authentication Service"
+update_entitlement created.
+
+define-permission UPDATE_USER name "Update User" description "Update Users in Authentication Service"
+update_user created.
+
+define-permission UPDATE_RESOURCE name "Update Resource" description "Update Resource in Authentication Service"
+update_resource created.
+
+define-permission GET_USER_AUTHTOKEN name "Get User's AuthToken" description "Permission to get AuthToken"
+get_user_authtoken created.
+
+define-permission CONTROL_ROBOT name "Control Robot" description "Full Control of Robots"
+control_robot created.
+
+define-permission CONTROL_SPEAKER name "Control Speaker" description "Full Control of Speakers"
+control_speaker created.
+
+define-permission CONTROL_TURNSTILE name "Control Turnstile" description "Full Control of Turnstiles"
+control_turnstile created.
+
+define-permission CONTROL_CAMERA name "Control Camera" description "Full Control of Cameras"
+control_camera created.
+
+define-permission CONTROL_MICROPHONE name "Control Microphone" description "Full Control of Microphones"
+control_microphone created.
+
+define-permission ENTER_STORE name "Enter Store" description "Permission for entering stores"
+enter_store created.
+
+define-permission CHECKOUT name "Checkout" description "Permission for checkout"
+checkout created.
+
+define-permission PROVISION_STORE name "Provision Store" description "Permission to provision stores, ailes, shelves, products, devices, customers"
+provision_store created.
+
+# This should fail as CREATE_ENTITLEMENT permission already exists
+define-permission CREATE_ENTITLEMENT name "Create Entitlement" description "Create Entitlements in Authentication Service"
+ERROR AT LINE NUMBER : 37
+FAILED COMMAND       : define-permission CREATE_ENTITLEMENT name "Create Entitlement" description "Create Entitlements in Authentication Service"
+ACTION               : define permission
+REASON               : create_entitlement already exists
+
+# --- CREATE ROLES ---
+define-role ADMIN_ROLE name "Store 24X7 Admin Role" description "Has all permissions in the Store 24X7 system"
+admin_role created.
+
+define-role AUTH_READONLY_ROLE name "Authorization Read Only Role" description "Has Authorization read only permissions"
+auth_readonly_role created.
+
+define-role ADULT_CONSUMER name "Adult Consumer Role" description "Has all permissions of an adult consumer"
+adult_consumer created.
+
+define-role CHILD_CONSUMER name "Child Consumer Role" description "Has all permissions of a child consumer"
+child_consumer created.
+
+define-role GUEST name "Guest Role" description "Has all permissions of a guest"
+guest created.
+
+define-role CONTROLLER_SERVICE_ROLE name "Store Controller Role" description "Has all permissions of controller service"
+controller_service_role created.
+
+# This should fail as ADMIN_ROLE role already exists
+define-role ADMIN_ROLE name "Store 24X7 Admin Role" description "Has all permissions in the Store 24X7 system"
+ERROR AT LINE NUMBER : 49
+FAILED COMMAND       : define-role ADMIN_ROLE name "Store 24X7 Admin Role" description "Has all permissions in the Store 24X7 system"
+ACTION               : define role
+REASON               : admin_role already exists
+
+# --- ADD PERMISSION TO ROLES ---
+add-entitlement-to-role entitlement READ_ENTITLEMENT role AUTH_READONLY_ROLE
+read_entitlement added to auth_readonly_role
+
+add-entitlement-to-role entitlement READ_USER role AUTH_READONLY_ROLE
+read_user added to auth_readonly_role
+
+add-entitlement-to-role entitlement READ_RESOURCE role AUTH_READONLY_ROLE
+read_resource added to auth_readonly_role
+
+add-entitlement-to-role entitlement GET_USER_AUTHTOKEN role AUTH_READONLY_ROLE
+get_user_authtoken added to auth_readonly_role
+
+add-entitlement-to-role entitlement CREATE_ENTITLEMENT role ADMIN_ROLE
+create_entitlement added to admin_role
+
+add-entitlement-to-role entitlement CREATE_USER role ADMIN_ROLE
+create_user added to admin_role
+
+add-entitlement-to-role entitlement CREATE_RESOURCE role ADMIN_ROLE
+create_resource added to admin_role
+
+add-entitlement-to-role entitlement UPDATE_ENTITLEMENT role ADMIN_ROLE
+update_entitlement added to admin_role
+
+add-entitlement-to-role entitlement UPDATE_USER role ADMIN_ROLE
+update_user added to admin_role
+
+add-entitlement-to-role entitlement UPDATE_RESOURCE role ADMIN_ROLE
+update_resource added to admin_role
+
+add-entitlement-to-role entitlement AUTH_READONLY_ROLE role ADMIN_ROLE
+auth_readonly_role added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_ROBOT role ADMIN_ROLE
+control_robot added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_SPEAKER role ADMIN_ROLE
+control_speaker added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_TURNSTILE role ADMIN_ROLE 
+control_turnstile added to admin_role
+
+add-entitlement-to-role entitlement PROVISION_STORE role ADMIN_ROLE
+provision_store added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_ROBOT role ADULT_CONSUMER
+control_robot added to adult_consumer
+
+add-entitlement-to-role entitlement CONTROL_MICROPHONE role ADULT_CONSUMER
+control_microphone added to adult_consumer
+
+add-entitlement-to-role entitlement ENTER_STORE role ADULT_CONSUMER
+enter_store added to adult_consumer
+
+add-entitlement-to-role entitlement CHECKOUT role ADULT_CONSUMER
+checkout added to adult_consumer
+
+add-entitlement-to-role entitlement ENTER_STORE role CHILD_CONSUMER
+enter_store added to child_consumer
+
+add-entitlement-to-role entitlement CHECKOUT role CHILD_CONSUMER
+checkout added to child_consumer
+
+add-entitlement-to-role entitlement ENTER_STORE role GUEST
+enter_store added to guest
+
+add-entitlement-to-role entitlement CONTROL_ROBOT role CONTROLLER_SERVICE_ROLE
+control_robot added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_SPEAKER role CONTROLLER_SERVICE_ROLE
+control_speaker added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_TURNSTILE role CONTROLLER_SERVICE_ROLE 
+control_turnstile added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_CAMERA role CONTROLLER_SERVICE_ROLE 
+control_camera added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_MICROPHONE role CONTROLLER_SERVICE_ROLE
+control_microphone added to controller_service_role
+
+add-entitlement-to-role entitlement UPDATE_USER role CONTROLLER_SERVICE_ROLE 
+update_user added to controller_service_role
+
+add-entitlement-to-role entitlement UPDATE_RESOURCE role CONTROLLER_SERVICE_ROLE 
+update_resource added to controller_service_role
+
+add-entitlement-to-role entitlement AUTH_READONLY_ROLE role CONTROLLER_SERVICE_ROLE 
+auth_readonly_role added to controller_service_role
+
+# This should fail, EDIT_RESOURCE permission does not exist
+add-entitlement-to-role entitlement EDIT_RESOURCE role ADMIN_ROLE
+ERROR AT LINE NUMBER : 85
+FAILED COMMAND       : add-entitlement-to-role entitlement EDIT_RESOURCE role ADMIN_ROLE
+ACTION               : add entitlement to role
+REASON               : edit_resource does not exist
+
+# This should fail, MANAGER_ROLE does not exist
+add-entitlement-to-role entitlement CREATE_ENTITLEMENT role MANAGER_ROLE
+ERROR AT LINE NUMBER : 88
+FAILED COMMAND       : add-entitlement-to-role entitlement CREATE_ENTITLEMENT role MANAGER_ROLE
+ACTION               : add entitlement to role
+REASON               : manager_role does not exist
+
+# This should fail, GET_USER_AUTHTOKEN is a permission, not a role
+add-entitlement-to-role entitlement CREATE_RESOURCE role GET_USER_AUTHTOKEN
+ERROR AT LINE NUMBER : 91
+FAILED COMMAND       : add-entitlement-to-role entitlement CREATE_RESOURCE role GET_USER_AUTHTOKEN
+ACTION               : add entitlement to role
+REASON               : get_user_authtoken is not a role
+
+# --- CREATE ADMIN ---
+create-user DEBRA name "DEBRA SMITH"
+User created.
+
+create-user BOB name "BOB SMITH"
+User created.
+
+create-user ALICE name "ALICE SMITH"
+User created.
+
+create-user JOHN name "JOHN SMITH"
+User created.
+
+create-user GEORGE name "GEORGE SMITH"
+User created.
+
+create-user CONTROLLER name "STORE CONTROLLER"
+User created.
+
+# This should fail, user already exists
+create-user DEBRA name "DEBRA SMITH"
+ERROR AT LINE NUMBER : 103
+FAILED COMMAND       : create-user DEBRA name "DEBRA SMITH"
+ACTION               : define user
+REASON               : debra already exists
+
+# --- ADD USER CREDENTIALS ---
+# This should fail, the password 1234 does not meet password requirements 
+add-user-credential DEBRA type PASSWORD value 1234
+ERROR AT LINE NUMBER : 108
+FAILED COMMAND       : add-user-credential DEBRA type PASSWORD value 1234
+ACTION               : add user credential
+REASON               : Password must contain at least one digit, one lower case letter, one upper case letter, one special character, no whitespaces, and at least 8 characters.
+
+# This should fail, FINGER_PRINT is not a valid credential type 
+add-user-credential DEBRA type FINGER_PRINT value 1234
+ERROR AT LINE NUMBER : 111
+FAILED COMMAND       : add-user-credential DEBRA type FINGER_PRINT value 1234
+ACTION               : add user credential
+REASON               : finger_print is not a valid credential type
+
+# This should fail, MIKE does not exist
+add-user-credential MIKE type FACE_PRINT value --face:mike--
+ERROR AT LINE NUMBER : 114
+FAILED COMMAND       : add-user-credential MIKE type FACE_PRINT value --face:mike--
+ACTION               : add user credential
+REASON               : mike does not exist
+
+# These should succeed
+add-user-credential DEBRA type PASSWORD value kq9!#P0f
+Password assigned to debra
+
+add-user-credential DEBRA type FACE_PRINT value --face:debra--
+--face:debra-- assigned to debra
+
+add-user-credential DEBRA type VOICE_PRINT value --voice:debra--
+--voice:debra-- assigned to debra
+
+add-user-credential BOB type FACE_PRINT value --face:bob--
+--face:bob-- assigned to bob
+
+add-user-credential BOB type VOICE_PRINT value --voice:bob--
+--voice:bob-- assigned to bob
+
+add-user-credential ALICE type FACE_PRINT value --face:alice--
+--face:alice-- assigned to alice
+
+add-user-credential ALICE type VOICE_PRINT value --voice:alice--
+--voice:alice-- assigned to alice
+
+add-user-credential JOHN type FACE_PRINT value --face:john--
+--face:john-- assigned to john
+
+add-user-credential JOHN type VOICE_PRINT value --voice:john--
+--voice:john-- assigned to john
+
+add-user-credential GEORGE type FACE_PRINT value --face:george--
+--face:george-- assigned to george
+
+add-user-credential GEORGE type VOICE_PRINT value --voice:george--
+--voice:george-- assigned to george
+
+add-user-credential CONTROLLER type PASSWORD value Default.4321
+Password assigned to controller
+
+# --- ADD ROLE TO USER ---
+add-role-to-user role ADMIN_ROLE user DEBRA
+admin_role added to debra
+
+# This should fail, MANAGER_ROLE does not exist
+add-role-to-user role MANAGER_ROLE user DEBRA
+ERROR AT LINE NUMBER : 135
+FAILED COMMAND       : add-role-to-user role MANAGER_ROLE user DEBRA
+ACTION               : add user entitlement
+REASON               : manager_role does not exist
+
+# This should fail, CARL does not exist
+add-role-to-user role ADMIN_ROLE user CARL
+ERROR AT LINE NUMBER : 138
+FAILED COMMAND       : add-role-to-user role ADMIN_ROLE user CARL
+ACTION               : add user entitlement
+REASON               : carl does not exist
+
+# --- LOGOUT ---
+logout
+root logged out.
+
+# --- LOGIN ---
+# This should fail, password is incorrect
+login debra password 1234
+ERROR AT LINE NUMBER : 147
+FAILED COMMAND       : login debra password 1234
+ACTION               : login
+REASON               : invalid username/password
+
+# This should succeed
+login debra password kq9!#P0f
+debra logged in.
+
+# --- CREATE STORES ---
+define-store  STORE_1 name RALPHS address "101 G St, San Diego, CA 92101"
+store_1 created.
+
+define-store  STORE_2 name TARGET address "1288 Camino Del Rio N, San Diego, CA 92108"
+store_2 created.
+
+# --- CREATE RESOURCE ROLE ---
+create-resource-role STORE1_CHILD_CONSUMER name "Child Consumer Resource Role for Store 1" description "Has all permissions of a child consumer for Store 1" role CHILD_CONSUMER resource STORE_1
+store1_child_consumer created.
+
+create-resource-role STORE1_ADULT_CONSUMER name "Adult Consumer Resource Role for Store 1" description "Has all permissions of an adult consumer for Store 1" role ADULT_CONSUMER resource STORE_1
+store1_adult_consumer created.
+
+create-resource-role STORE2_ADULT_CONSUMER name "Adult Consumer Resource Role for Store 2" description "Has all permissions of an adult consumer for Store 2" role ADULT_CONSUMER resource STORE_2
+store2_adult_consumer created.
+
+# This should fail, STORE_3 does not exist 
+create-resource-role STORE3_CHILD_CONSUMER name "Child Consumer Resource Role for Store 3" description "Has all permissions of a child consumer for Store 3" role CHILD_CONSUMER resource STORE_3
+ERROR AT LINE NUMBER : 164
+FAILED COMMAND       : create-resource-role STORE3_CHILD_CONSUMER name "Child Consumer Resource Role for Store 3" description "Has all permissions of a child consumer for Store 3" role CHILD_CONSUMER resource STORE_3
+ACTION               : define resource role
+REASON               : store_3 does not exist
+
+# This should fail, there is no MEMBER role
+create-resource-role STORE1_MEMBER name "Member Resource Role for Store 1" description "Has all permissions of a member for Store 1" role MEMBER resource STORE_1
+ERROR AT LINE NUMBER : 167
+FAILED COMMAND       : create-resource-role STORE1_MEMBER name "Member Resource Role for Store 1" description "Has all permissions of a member for Store 1" role MEMBER resource STORE_1
+ACTION               : define resource role
+REASON               : member is not a valid role
+
+# This should fail, STORE1_ADULT_CONSUMER already exists
+create-resource-role STORE1_ADULT_CONSUMER name "Adult Consumer Resource Role for Store 1" description "Has all permissions of an adult consumer for Store 1" role ADULT_CONSUMER resource STORE_1
+ERROR AT LINE NUMBER : 170
+FAILED COMMAND       : create-resource-role STORE1_ADULT_CONSUMER name "Adult Consumer Resource Role for Store 1" description "Has all permissions of an adult consumer for Store 1" role ADULT_CONSUMER resource STORE_1
+ACTION               : define resource role
+REASON               : store1_adult_consumer already exists
+
+# --- ADD ROLE TO USER ---
+add-role-to-user role GUEST user GEORGE
+guest added to george
+
+add-role-to-user role CONTROLLER_SERVICE_ROLE user CONTROLLER
+controller_service_role added to controller
+
+# --- ADD RESOURCE ROLE TO USER ---
+add-resource-role-to-user resource-role STORE1_ADULT_CONSUMER user BOB 
+store1_adult_consumer added to bob
+
+add-resource-role-to-user resource-role STORE1_CHILD_CONSUMER user ALICE
+store1_child_consumer added to alice
+
+add-resource-role-to-user resource-role STORE2_ADULT_CONSUMER user JOHN
+store2_adult_consumer added to john
+
+# --- CUSTOMER COMMANDS ---
+# Define registered customers
+define-customer CUSTOMER_R1 first_name BOB last_name SMITH type REGISTERED email_address BOB@GMAIL.COM account BOB
+customer_r1 created.
+
+define-customer CUSTOMER_R2 first_name ALICE last_name SMITH type REGISTERED email_address ALICE@GMAIL.COM account ALICE
+customer_r2 created.
+
+define-customer CUSTOMER_R3 first_name JOHN last_name SMITH type REGISTERED email_address JOHN@GMAIL.COM account JOHN
+customer_r3 created.
+
+# Define a guest customer
+define-customer CUSTOMER_G1 first_name GEORGE last_name SMITH type GUEST email_address GEORGE@GMAIL.COM account GEORGE
+customer_g1 created.
+
+# --- CREATE ACCOUNTS ---
+create-account STORE_1
+Account created for store_1.
+
+create-account STORE_2
+Account created for store_2.
+
+create-account BOB
+Account created for bob.
+
+create-account ALICE
+Account created for alice.
+
+create-account JOHN
+Account created for john.
+
+create-account GEORGE
+Account created for george.
+
+# --- PROCESS TRANSACTIONS ---
+process-transaction amount 10000 fee 10 note "fund account" payer master receiver STORE_1
+Received Transaction 1
+
+process-transaction amount 10000 fee 10 note "fund account" payer master receiver STORE_2
+Received Transaction 2
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver BOB
+Received Transaction 3
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver BOB
+Received Transaction 4
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver ALICE
+Received Transaction 5
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver ALICE
+Received Transaction 6
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver JOHN
+Received Transaction 7
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver JOHN
+Received Transaction 8
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver GEORGE
+Received Transaction 9
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver GEORGE
+Received Transaction 10
+Block 1 committed successfully.
+
+# --- GET ACCOUNT BALANCES ---
+get-account-balances
+store_1: 10000
+store_2: 10000
+bob: 2000
+alice: 2000
+george: 2000
+john: 2000
+master: 2147455647
+
+# --- AISLE COMMANDS ---
+# Define aisles for STORE_1
+define-aisle  STORE_1:AISLE_F1  name  AISLE_F1  description  DAIRY_AISLE location  FLOOR
+aisle_f1 created.
+
+define-aisle  STORE_1:AISLE_F2  name  AISLE_F2  description  BAKERY_AISLE location  FLOOR
+aisle_f2 created.
+
+define-aisle  STORE_1:AISLE_S1  name  AISLE_S1  description  DAIRY_AISLE location  STORE_ROOM
+aisle_s1 created.
+
+define-aisle  STORE_1:AISLE_S2  name  AISLE_S2  description  BAKERY_AISLE location  STORE_ROOM
+aisle_s2 created.
+
+define-aisle  STORE_1:CHECKOUT_AREA_1  name  CHECKOUT_AREA_1  description  CHECKOUT_AREA_1 location  FLOOR
+checkout_area_1 created.
+
+define-aisle  STORE_1:CHECKOUT_AREA_2  name  CHECKOUT_AREA_2  description  CHECKOUT_AREA_2 location  FLOOR
+checkout_area_2 created.
+
+# --- SHELF COMMANDS ---
+# Define shelves for STORE_1
+define-shelf  STORE_1:AISLE_F1:SHELF_F1  name  SHELF_F1  level  low   description  "MILK" temperature  REFRIGERATED
+shelf_f1 created.
+
+define-shelf  STORE_1:AISLE_F1:SHELF_F2  name  SHELF_F2  level  medium   description  "CHEESE" temperature  REFRIGERATED
+shelf_f2 created.
+
+define-shelf  STORE_1:AISLE_F1:SHELF_F3  name  SHELF_F3  level  high   description  "EGG" temperature  REFRIGERATED
+shelf_f3 created.
+
+define-shelf  STORE_1:AISLE_F2:SHELF_F4  name  SHELF_F4  level  low   description  "BAGEL" 
+shelf_f4 created.
+
+define-shelf  STORE_1:AISLE_F2:SHELF_F5  name  SHELF_F5  level  medium   description  "BAGUETTE" 
+shelf_f5 created.
+
+define-shelf  STORE_1:AISLE_F2:SHELF_F6  name  SHELF_F6  level  high   description  "MUFFIN" 
+shelf_f6 created.
+
+define-shelf  STORE_1:AISLE_S1:SHELF_S1  name  SHELF_S1  level  low   description  "MILK" temperature  REFRIGERATED
+shelf_s1 created.
+
+define-shelf  STORE_1:AISLE_S1:SHELF_S2  name  SHELF_S2  level  medium   description  "CHEESE" temperature  REFRIGERATED
+shelf_s2 created.
+
+define-shelf  STORE_1:AISLE_S1:SHELF_S3  name  SHELF_S3  level  high   description  "EGG" temperature  REFRIGERATED
+shelf_s3 created.
+
+define-shelf  STORE_1:AISLE_S2:SHELF_S4  name  SHELF_S4  level  low   description  "BAGEL" 
+shelf_s4 created.
+
+define-shelf  STORE_1:AISLE_S2:SHELF_S5  name  SHELF_S5  level  medium   description  "BAGUETTE" 
+shelf_s5 created.
+
+define-shelf  STORE_1:AISLE_S2:SHELF_S6  name  SHELF_S6  level  high   description  "MUFFIN" 
+shelf_s6 created.
+
+# --- PRODUCT COMMANDS ---
+define-product PRODUCT_1 name MILK description "ORGANIC MILK" weight 128 category DAIRY unit_price 4 temperature REFRIGERATED
+product_1 created.
+
+define-product PRODUCT_2 name CHEESE description "CHEDDAR CHEESE" weight 8 category DAIRY unit_price 3 temperature REFRIGERATED
+product_2 created.
+
+define-product PRODUCT_3 name EGG description "CAGE FREE EGGS" weight 16 category DAIRY unit_price 6 temperature REFRIGERATED
+product_3 created.
+
+define-product PRODUCT_4 name BAGEL description "PLAIN BAGELS" weight 16 category BAKERY unit_price 5 temperature AMBIENT
+product_4 created.
+
+define-product PRODUCT_5 name BAGUETTE description "FRENCH BAGUETTE" weight 12 category BAKERY unit_price 3 temperature AMBIENT
+product_5 created.
+
+define-product PRODUCT_6 name MUFFIN description "BLUEBERRY MUFFINS" weight 16 category BAKERY unit_price 6 temperature AMBIENT
+product_6 created.
+
+# --- INVENTORY COMMANDS ---
+# Define STORE_1 inventories
+define-inventory INVENTORY_FL_1 location STORE_1:AISLE_F1:SHELF_F1 capacity 10 count 10 product PRODUCT_1
+inventory_fl_1 created.
+
+define-inventory INVENTORY_FL_2 location STORE_1:AISLE_F1:SHELF_F2 capacity 10 count 10 product PRODUCT_2
+inventory_fl_2 created.
+
+define-inventory INVENTORY_FL_3 location STORE_1:AISLE_F1:SHELF_F3 capacity 10 count 10 product PRODUCT_3
+inventory_fl_3 created.
+
+define-inventory INVENTORY_FL_4 location STORE_1:AISLE_F2:SHELF_F4 capacity 10 count 10 product PRODUCT_4
+inventory_fl_4 created.
+
+define-inventory INVENTORY_FL_5 location STORE_1:AISLE_F2:SHELF_F5 capacity 10 count 10 product PRODUCT_5
+inventory_fl_5 created.
+
+define-inventory INVENTORY_FL_6 location STORE_1:AISLE_F2:SHELF_F6 capacity 10 count 10 product PRODUCT_6
+inventory_fl_6 created.
+
+define-inventory INVENTORY_SR_1 location STORE_1:AISLE_S1:SHELF_S1 capacity 10 count 10 product PRODUCT_1
+inventory_sr_1 created.
+
+define-inventory INVENTORY_SR_2 location STORE_1:AISLE_S1:SHELF_S2 capacity 10 count 10 product PRODUCT_2
+inventory_sr_2 created.
+
+define-inventory INVENTORY_SR_3 location STORE_1:AISLE_S1:SHELF_S3 capacity 10 count 10 product PRODUCT_3
+inventory_sr_3 created.
+
+define-inventory INVENTORY_SR_4 location STORE_1:AISLE_S2:SHELF_S4 capacity 10 count 10 product PRODUCT_4
+inventory_sr_4 created.
+
+define-inventory INVENTORY_SR_5 location STORE_1:AISLE_S2:SHELF_S5 capacity 10 count 10 product PRODUCT_5
+inventory_sr_5 created.
+
+define-inventory INVENTORY_SR_6 location STORE_1:AISLE_S2:SHELF_S6 capacity 10 count 10 product PRODUCT_6
+inventory_sr_6 created.
+
+# --- DEVICE COMMANDS ---
+# Define STORE_1 Devices
+define-device CAMERA_C1 name CAMERA_C1 type CAMERA location STORE_1:CHECKOUT_AREA_1
+camera_c1 created.
+
+define-device CAMERA_C2 name CAMERA_C2 type CAMERA location STORE_1:CHECKOUT_AREA_2
+camera_c2 created.
+
+define-device CAMERA_F1 name CAMERA_F1 type CAMERA location STORE_1:AISLE_F1
+camera_f1 created.
+
+define-device CAMERA_F2 name CAMERA_F2 type CAMERA location STORE_1:AISLE_F2
+camera_f2 created.
+
+define-device MICROPHONE_C1 name MICROPHONE_C1 type MICROPHONE location STORE_1:CHECKOUT_AREA_1
+microphone_c1 created.
+
+define-device MICROPHONE_C2 name MICROPHONE_C2 type MICROPHONE location STORE_1:CHECKOUT_AREA_2
+microphone_c2 created.
+
+define-device MICROPHONE_F1 name MICROPHONE_F1 type MICROPHONE location STORE_1:AISLE_F1
+microphone_f1 created.
+
+define-device MICROPHONE_F2 name MICROPHONE_F2 type MICROPHONE location STORE_1:AISLE_F2
+microphone_f2 created.
+
+define-device SPEAKER_C1 name SPEAKER_C1 type SPEAKER location STORE_1:CHECKOUT_AREA_1
+speaker_c1 created.
+
+define-device SPEAKER_C2 name SPEAKER_C2 type SPEAKER location STORE_1:CHECKOUT_AREA_2
+speaker_c2 created.
+
+define-device SPEAKER_F1 name SPEAKER_F1 type SPEAKER location STORE_1:AISLE_F1
+speaker_f1 created.
+
+define-device SPEAKER_F2 name SPEAKER_F2 type SPEAKER location STORE_1:AISLE_F2
+speaker_f2 created.
+
+define-device ROBOT_1 name ROBOT_1 type ROBOT location STORE_1:AISLE_F1
+robot_1 created.
+
+define-device ROBOT_2 name ROBOT_2 type ROBOT location STORE_1:AISLE_F2
+robot_2 created.
+
+define-device ROBOT_3 name ROBOT_3 type ROBOT location STORE_1:CHECKOUT_AREA_1
+robot_3 created.
+
+define-device TURNSTILE_1 name TURNSTILE_1 type TURNSTILE location STORE_1:CHECKOUT_AREA_1
+turnstile_1 created.
+
+define-device TURNSTILE_2 name TURNSTILE_2 type TURNSTILE location STORE_1:CHECKOUT_AREA_2
+turnstile_2 created.
+
+# --- EVENTS ---
+# --- ENTER STORE EVENTS ---
+# BOB tries to enter STORE_2. This should fail, BOB cannot enter STORE_2 because he does not have STORE2_ADULT_CONSUMER role 
+create-event TURNSTILE_3 event ENTER_STORE customer CUSTOMER_R1 faceprint --face:bob--
+debra logged out.
+controller logged in.
+ERROR AT LINE NUMBER : 296
+FAILED COMMAND       : create-event TURNSTILE_3 event ENTER_STORE customer CUSTOMER_R1 faceprint --face:bob--
+ACTION               : get store from device id
+REASON               : turnstile_3 does not exist
+
+# These should succeed
+create-event TURNSTILE_1 event ENTER_STORE customer CUSTOMER_R1 faceprint --face:bob--
+Access granted. customer_r1 has an account balance of 2000.
+turnstile_1 opened.
+speaker_c1 Announcing: <<Hello bob, welcome to ralphs!>>
+BASKET_1 created
+BASKET_1 assigned to customer_r1
+customer_r1 entered store_1 and moved to checkout_area_1
+turnstile_1 closed.
+
+create-event TURNSTILE_2 event ENTER_STORE customer CUSTOMER_R2 faceprint --face:alice--
+Access granted. customer_r2 has an account balance of 2000.
+turnstile_2 opened.
+speaker_c2 Announcing: <<Hello alice, welcome to ralphs!>>
+BASKET_2 created
+BASKET_2 assigned to customer_r2
+customer_r2 entered store_1 and moved to checkout_area_2
+turnstile_2 closed.
+
+create-event TURNSTILE_1 event ENTER_STORE customer CUSTOMER_G1 faceprint --face:george--
+Access granted. customer_g1 has an account balance of 2000.
+turnstile_1 opened.
+speaker_c1 Announcing: <<Hello george, welcome to ralphs!>>
+customer_g1 entered store_1 and moved to checkout_area_1
+turnstile_1 closed.
+
+# --- MISSING PERSON EVENT ---
+# ALICE asks a microphone to find BOB. Access should be denied, ALICE is not an adult. Hence, she cannot control microphones.
+create-event MICROPHONE_F2 event MISSING_PERSON can you help me find CUSTOMER_R1 voiceprint --voice:alice--
+speaker_f2 Announcing: <<Access denied! You do not have the required permission to control microphones.>>
+
+# GEORGE asks a microphone to find BOB. Access should be denied, GEORGE is a guest and he only has enter_store permission. Hence, he cannot control microphones.
+create-event MICROPHONE_F1 event MISSING_PERSON can you help me find CUSTOMER_R1 voiceprint --voice:george--
+speaker_f1 Announcing: <<Access denied! You do not have the required permission to control microphones.>>
+
+# --- FETCH PRODUCT EVENTS ---
+# ALICE makes a fetch product request. Access should be denied, ALICE is a child, she cannot control robots.
+create-event MICROPHONE_F2 event FETCH_PRODUCT customer CUSTOMER_R2 product PRODUCT_1 count 3 voiceprint --voice:alice--
+speaker_f2 Announcing: <<Access denied! You do not have the required permission to control robots.>>
+
+# GEORGE makes a fetch product request. Access should be denied, GEORGE is a guest, he cannot control robots.
+create-event MICROPHONE_F1 event FETCH_PRODUCT customer CUSTOMER_G1 product PRODUCT_1 count 3 voiceprint --voice:george--
+speaker_f1 Announcing: <<Access denied! You do not have the required permission to control robots.>>
+
+# --- CHECK ACCOUNT BALANCE EVENTS ---
+# GEORGE tries to checkout. This should fail, GEORGE is a guest, he cannot checkout.
+create-event TURNSTILE_1 event CHECKOUT customer CUSTOMER_G1 faceprint --face:george--
+ERROR AT LINE NUMBER : 322
+FAILED COMMAND       : create-event TURNSTILE_1 event CHECKOUT customer CUSTOMER_G1 faceprint --face:george--
+ACTION               : check permission
+REASON               : george does not have checkout permission for store_1.

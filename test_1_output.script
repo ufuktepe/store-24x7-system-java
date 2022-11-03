@@ -1,0 +1,946 @@
+#***********************************************
+# Author     :  Burak Ufuktepe
+# File       :  test_1.script
+# Assignment :  4
+# Notes      :  Authentication Service Tests for Functionality
+#***********************************************
+# --- CREATE LEDGER ---
+create-ledger ledger description "ledger 2021" seed "harvard"
+Account created for master.
+Ledger created successfully.
+
+# --- LOGIN AS ROOT USER ---
+login root password Default.1234
+root logged in.
+
+# --- CREATE AUTHENTICATION SERVICE PERMISSIONS ---
+define-permission CREATE_ENTITLEMENT name "Create Entitlement" description "Create Entitlements in Authentication Service"
+create_entitlement created.
+
+define-permission CREATE_USER name "Create User" description "Create Users in Authentication Service"
+create_user created.
+
+define-permission CREATE_RESOURCE name "Create Resource" description "Create Resource in Authentication Service"
+create_resource created.
+
+define-permission READ_ENTITLEMENT name "Read Entitlement" description "Read Entitlements in Authentication Service"
+read_entitlement created.
+
+define-permission READ_USER name "Read User" description "Read Users in Authentication Service"
+read_user created.
+
+define-permission READ_RESOURCE name "Read Resource" description "Read Resource in Authentication Service"
+read_resource created.
+
+define-permission UPDATE_ENTITLEMENT name "Update Entitlement" description "Update Entitlements in Authentication Service"
+update_entitlement created.
+
+define-permission UPDATE_USER name "Update User" description "Update Users in Authentication Service"
+update_user created.
+
+define-permission UPDATE_RESOURCE name "Update Resource" description "Update Resource in Authentication Service"
+update_resource created.
+
+define-permission GET_USER_AUTHTOKEN name "Get User's AuthToken" description "Permission to get AuthToken"
+get_user_authtoken created.
+
+# --- CREATE ROLES ---
+define-role ADMIN_ROLE name "Store 24X7 Admin Role" description "Has all permissions in the Store 24X7 system"
+admin_role created.
+
+define-role AUTH_READONLY_ROLE name "Authorization Read Only Role" description "Has Authorization read only permissions"
+auth_readonly_role created.
+
+# --- ADD PERMISSION TO ROLES ---
+add-entitlement-to-role entitlement READ_ENTITLEMENT role AUTH_READONLY_ROLE
+read_entitlement added to auth_readonly_role
+
+add-entitlement-to-role entitlement READ_USER role AUTH_READONLY_ROLE
+read_user added to auth_readonly_role
+
+add-entitlement-to-role entitlement READ_RESOURCE role AUTH_READONLY_ROLE
+read_resource added to auth_readonly_role
+
+add-entitlement-to-role entitlement GET_USER_AUTHTOKEN role AUTH_READONLY_ROLE
+get_user_authtoken added to auth_readonly_role
+
+add-entitlement-to-role entitlement CREATE_ENTITLEMENT role ADMIN_ROLE
+create_entitlement added to admin_role
+
+add-entitlement-to-role entitlement CREATE_USER role ADMIN_ROLE
+create_user added to admin_role
+
+add-entitlement-to-role entitlement CREATE_RESOURCE role ADMIN_ROLE
+create_resource added to admin_role
+
+add-entitlement-to-role entitlement UPDATE_ENTITLEMENT role ADMIN_ROLE
+update_entitlement added to admin_role
+
+add-entitlement-to-role entitlement UPDATE_USER role ADMIN_ROLE
+update_user added to admin_role
+
+add-entitlement-to-role entitlement UPDATE_RESOURCE role ADMIN_ROLE
+update_resource added to admin_role
+
+add-entitlement-to-role entitlement AUTH_READONLY_ROLE role ADMIN_ROLE
+auth_readonly_role added to admin_role
+
+# --- CREATE ADMIN ---
+create-user DEBRA name "DEBRA SMITH"
+User created.
+
+# --- ADD USER CREDENTIALS ---
+add-user-credential DEBRA type PASSWORD value kq9!#P0f
+Password assigned to debra
+
+add-user-credential DEBRA type FACE_PRINT value --face:debra--
+--face:debra-- assigned to debra
+
+add-user-credential DEBRA type VOICE_PRINT value --voice:debra--
+--voice:debra-- assigned to debra
+
+# --- ADD ROLE TO USER ---
+add-role-to-user role ADMIN_ROLE user DEBRA
+admin_role added to debra
+
+# --- LOGOUT ---
+logout
+root logged out.
+
+# --- LOGIN AS ADMIN ---
+login debra password kq9!#P0f
+debra logged in.
+
+# --- CREATE STORE PERMISSIONS ---
+define-permission CONTROL_ROBOT name "Control Robot" description "Full Control of Robots"
+control_robot created.
+
+define-permission CONTROL_SPEAKER name "Control Speaker" description "Full Control of Speakers"
+control_speaker created.
+
+define-permission CONTROL_TURNSTILE name "Control Turnstile" description "Full Control of Turnstiles"
+control_turnstile created.
+
+define-permission CONTROL_CAMERA name "Control Camera" description "Full Control of Cameras"
+control_camera created.
+
+define-permission CONTROL_MICROPHONE name "Control Microphone" description "Full Control of Microphones"
+control_microphone created.
+
+define-permission ENTER_STORE name "Enter Store" description "Permission for entering stores"
+enter_store created.
+
+define-permission CHECKOUT name "Checkout" description "Permission for checkout"
+checkout created.
+
+define-permission PROVISION_STORE name "Provision Store" description "Permission to provision stores, ailes, shelves, products, devices, customers"
+provision_store created.
+
+# --- CREATE ROLES ---
+define-role ADULT_CONSUMER name "Adult Consumer Role" description "Has all permissions of an adult consumer"
+adult_consumer created.
+
+define-role CHILD_CONSUMER name "Child Consumer Role" description "Has all permissions of a child consumer"
+child_consumer created.
+
+define-role GUEST name "Guest Role" description "Has all permissions of a guest"
+guest created.
+
+define-role CONTROLLER_SERVICE_ROLE name "Store Controller Role" description "Has all permissions of controller service"
+controller_service_role created.
+
+# --- ADD PERMISSION TO ROLES ---
+add-entitlement-to-role entitlement CONTROL_ROBOT role ADMIN_ROLE
+control_robot added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_SPEAKER role ADMIN_ROLE
+control_speaker added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_TURNSTILE role ADMIN_ROLE 
+control_turnstile added to admin_role
+
+add-entitlement-to-role entitlement PROVISION_STORE role ADMIN_ROLE
+provision_store added to admin_role
+
+add-entitlement-to-role entitlement CONTROL_ROBOT role ADULT_CONSUMER
+control_robot added to adult_consumer
+
+add-entitlement-to-role entitlement CONTROL_MICROPHONE role ADULT_CONSUMER
+control_microphone added to adult_consumer
+
+add-entitlement-to-role entitlement ENTER_STORE role ADULT_CONSUMER
+enter_store added to adult_consumer
+
+add-entitlement-to-role entitlement CHECKOUT role ADULT_CONSUMER
+checkout added to adult_consumer
+
+add-entitlement-to-role entitlement ENTER_STORE role CHILD_CONSUMER
+enter_store added to child_consumer
+
+add-entitlement-to-role entitlement CHECKOUT role CHILD_CONSUMER
+checkout added to child_consumer
+
+add-entitlement-to-role entitlement ENTER_STORE role GUEST
+enter_store added to guest
+
+add-entitlement-to-role entitlement CONTROL_ROBOT role CONTROLLER_SERVICE_ROLE
+control_robot added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_SPEAKER role CONTROLLER_SERVICE_ROLE
+control_speaker added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_TURNSTILE role CONTROLLER_SERVICE_ROLE 
+control_turnstile added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_CAMERA role CONTROLLER_SERVICE_ROLE 
+control_camera added to controller_service_role
+
+add-entitlement-to-role entitlement CONTROL_MICROPHONE role CONTROLLER_SERVICE_ROLE
+control_microphone added to controller_service_role
+
+add-entitlement-to-role entitlement UPDATE_USER role CONTROLLER_SERVICE_ROLE 
+update_user added to controller_service_role
+
+add-entitlement-to-role entitlement UPDATE_RESOURCE role CONTROLLER_SERVICE_ROLE 
+update_resource added to controller_service_role
+
+add-entitlement-to-role entitlement AUTH_READONLY_ROLE role CONTROLLER_SERVICE_ROLE 
+auth_readonly_role added to controller_service_role
+
+# --- CREATE USERS ---
+create-user BOB name "BOB SMITH"
+User created.
+
+create-user ALICE name "ALICE SMITH"
+User created.
+
+create-user JOHN name "JOHN SMITH"
+User created.
+
+create-user GEORGE name "GEORGE SMITH"
+User created.
+
+create-user CONTROLLER name "STORE CONTROLLER"
+User created.
+
+# --- ADD USER CREDENTIALS ---
+add-user-credential DEBRA type VOICE_PRINT value --voice:debra--
+--voice:debra-- assigned to debra
+
+add-user-credential BOB type FACE_PRINT value --face:bob--
+--face:bob-- assigned to bob
+
+add-user-credential BOB type VOICE_PRINT value --voice:bob--
+--voice:bob-- assigned to bob
+
+add-user-credential ALICE type FACE_PRINT value --face:alice--
+--face:alice-- assigned to alice
+
+add-user-credential ALICE type VOICE_PRINT value --voice:alice--
+--voice:alice-- assigned to alice
+
+add-user-credential JOHN type FACE_PRINT value --face:john--
+--face:john-- assigned to john
+
+add-user-credential JOHN type VOICE_PRINT value --voice:john--
+--voice:john-- assigned to john
+
+add-user-credential GEORGE type FACE_PRINT value --face:george--
+--face:george-- assigned to george
+
+add-user-credential GEORGE type VOICE_PRINT value --voice:george--
+--voice:george-- assigned to george
+
+add-user-credential CONTROLLER type PASSWORD value Default.4321
+Password assigned to controller
+
+# --- CREATE STORE ---
+# This should create a store
+define-store  STORE_1 name RALPHS address "101 G St, San Diego, CA 92101"
+store_1 created.
+
+# --- CREATE RESOURCE ROLE ---
+create-resource-role STORE1_CHILD_CONSUMER name "Child Consumer Resource Role" description "Has all permissions of a child consumer for Store 1" role CHILD_CONSUMER resource STORE_1
+store1_child_consumer created.
+
+create-resource-role STORE1_ADULT_CONSUMER name "Adult Consumer Resource Role" description "Has all permissions of an adult consumer for Store 1" role ADULT_CONSUMER resource STORE_1
+store1_adult_consumer created.
+
+# --- ADD ROLE TO USER ---
+add-role-to-user role GUEST user GEORGE
+guest added to george
+
+add-role-to-user role CONTROLLER_SERVICE_ROLE user CONTROLLER
+controller_service_role added to controller
+
+# --- ADD RESOURCE ROLE TO USER ---
+add-resource-role-to-user resource-role STORE1_ADULT_CONSUMER user BOB 
+store1_adult_consumer added to bob
+
+add-resource-role-to-user resource-role STORE1_ADULT_CONSUMER user JOHN
+store1_adult_consumer added to john
+
+add-resource-role-to-user resource-role STORE1_CHILD_CONSUMER user ALICE
+store1_child_consumer added to alice
+
+# --- DISPLAY INVENTORY ---
+get-inventory
+USER ID       : debra                   NAME: debra smith                   AUTHTOKEN  : dH0pFpxgUJOjyq1H                              FACEPRINT: cUm1VwtdL8EpeAdU  VOICEPRINT: 4FtOIYGMiilVpb65  
+USER ID       : controller              NAME: store controller              AUTHTOKEN  : N/A                                           FACEPRINT: N/A               VOICEPRINT: N/A               
+USER ID       : bob                     NAME: bob smith                     AUTHTOKEN  : N/A                                           FACEPRINT: X6xz+5Yv5vn66wxC  VOICEPRINT: 7c2tQb9oo49S3eAP  
+USER ID       : root                    NAME: default root account          AUTHTOKEN  : N/A                                           FACEPRINT: N/A               VOICEPRINT: N/A               
+USER ID       : alice                   NAME: alice smith                   AUTHTOKEN  : N/A                                           FACEPRINT: 20dzbr6Uz9TodlCB  VOICEPRINT: 8mcv6ZvrE2gneTVO  
+USER ID       : george                  NAME: george smith                  AUTHTOKEN  : N/A                                           FACEPRINT: MBQ8rxAlRKCL4hN3  VOICEPRINT: bXYjQo6ZL6dKoWot  
+USER ID       : john                    NAME: john smith                    AUTHTOKEN  : N/A                                           FACEPRINT: fjZfFFzYuk4MxjPa  VOICEPRINT: z8MTL9xnS+lrWeVH  
+RESOURCE ID   : store_1                 DESCRIPTION: ralphs                        
+ENTITLEMENT ID: create_entitlement      NAME: create entitlement            DESCRIPTION: create entitlements in authentication service 
+ENTITLEMENT ID: control_microphone      NAME: control microphone            DESCRIPTION: full control of microphones                   
+ENTITLEMENT ID: auth_readonly_role      NAME: authorization read only role  DESCRIPTION: has authorization read only permissions       
+ENTITLEMENT ID: read_resource           NAME: read resource                 DESCRIPTION: read resource in authentication service       
+ENTITLEMENT ID: update_user             NAME: update user                   DESCRIPTION: update users in authentication service        
+ENTITLEMENT ID: control_camera          NAME: control camera                DESCRIPTION: full control of cameras                       
+ENTITLEMENT ID: control_robot           NAME: control robot                 DESCRIPTION: full control of robots                        
+ENTITLEMENT ID: checkout                NAME: checkout                      DESCRIPTION: permission for checkout                       
+ENTITLEMENT ID: adult_consumer          NAME: adult consumer role           DESCRIPTION: has all permissions of an adult consumer      
+ENTITLEMENT ID: admin_role              NAME: store 24x7 admin role         DESCRIPTION: has all permissions in the store 24x7 system  
+ENTITLEMENT ID: control_turnstile       NAME: control turnstile             DESCRIPTION: full control of turnstiles                    
+ENTITLEMENT ID: control_speaker         NAME: control speaker               DESCRIPTION: full control of speakers                      
+ENTITLEMENT ID: child_consumer          NAME: child consumer role           DESCRIPTION: has all permissions of a child consumer       
+ENTITLEMENT ID: read_entitlement        NAME: read entitlement              DESCRIPTION: read entitlements in authentication service   
+ENTITLEMENT ID: enter_store             NAME: enter store                   DESCRIPTION: permission for entering stores                
+ENTITLEMENT ID: controller_service_role NAME: store controller role         DESCRIPTION: has all permissions of controller service     
+ENTITLEMENT ID: read_user               NAME: read user                     DESCRIPTION: read users in authentication service          
+ENTITLEMENT ID: update_entitlement      NAME: update entitlement            DESCRIPTION: update entitlements in authentication service 
+ENTITLEMENT ID: get_user_authtoken      NAME: get user's authtoken          DESCRIPTION: permission to get authtoken                   
+ENTITLEMENT ID: guest                   NAME: guest role                    DESCRIPTION: has all permissions of a guest                
+ENTITLEMENT ID: create_user             NAME: create user                   DESCRIPTION: create users in authentication service        
+ENTITLEMENT ID: create_resource         NAME: create resource               DESCRIPTION: create resource in authentication service     
+ENTITLEMENT ID: store1_child_consumer   NAME: child consumer resource role  DESCRIPTION: has all permissions of a child consumer for store 1
+ENTITLEMENT ID: update_resource         NAME: update resource               DESCRIPTION: update resource in authentication service     
+ENTITLEMENT ID: store1_adult_consumer   NAME: adult consumer resource role  DESCRIPTION: has all permissions of an adult consumer for store 1
+ENTITLEMENT ID: provision_store         NAME: provision store               DESCRIPTION: permission to provision stores, ailes, shelves, products, devices, customers
+
+
+# --- CUSTOMER COMMANDS ---
+# Define registered customers
+define-customer CUSTOMER_R1 first_name BOB last_name SMITH type REGISTERED email_address BOB@GMAIL.COM account BOB
+customer_r1 created.
+
+define-customer CUSTOMER_R2 first_name ALICE last_name SMITH type REGISTERED email_address ALICE@GMAIL.COM account ALICE
+customer_r2 created.
+
+define-customer CUSTOMER_R3 first_name JOHN last_name SMITH type REGISTERED email_address JOHN@GMAIL.COM account JOHN
+customer_r3 created.
+
+# Define a guest customer
+define-customer CUSTOMER_G1 first_name GEORGE last_name SMITH type GUEST email_address GEORGE@GMAIL.COM account GEORGE
+customer_g1 created.
+
+# --- CREATE ACCOUNTS ---
+# Create a store account
+create-account STORE_1
+Account created for store_1.
+
+# Create customer accounts
+create-account BOB
+Account created for bob.
+
+create-account ALICE
+Account created for alice.
+
+create-account JOHN
+Account created for john.
+
+create-account GEORGE
+Account created for george.
+
+# --- PROCESS TRANSACTIONS ---
+process-transaction amount 10000 fee 10 note "fund account" payer master receiver STORE_1
+Received Transaction 1
+
+process-transaction amount 10000 fee 10 note "fund account" payer master receiver STORE_1
+Received Transaction 2
+
+process-transaction amount 10000 fee 10 note "fund account" payer master receiver STORE_1
+Received Transaction 3
+
+process-transaction amount 10000 fee 10 note "fund account" payer master receiver STORE_1
+Received Transaction 4
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver BOB
+Received Transaction 5
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver BOB
+Received Transaction 6
+
+process-transaction amount 10 fee 10 note "fund account" payer master receiver ALICE
+Received Transaction 7
+
+process-transaction amount 10 fee 10 note "fund account" payer master receiver ALICE
+Received Transaction 8
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver GEORGE
+Received Transaction 9
+
+process-transaction amount 1000 fee 10 note "fund account" payer master receiver GEORGE
+Received Transaction 10
+Block 1 committed successfully.
+
+# --- GET ACCOUNT BALANCES ---
+get-account-balances
+store_1: 40000
+bob: 2000
+alice: 20
+george: 2000
+john: 0
+master: 2147439627
+
+# --- GET BLOCK ---
+get-block 1
+Block                 : 1
+Hash                  : S8sOU+htkxdX77aNoPvZtitYn8QURmj0zXqYBSbHK+A=
+Previous Block's Hash : RycBCw/11269a5G4F9doRw2e5peMrNSg9DTn6/HrB8M=
+
+TRANSACTIONS
+Transaction ID: 1     Payer: master          Receiver: store_1         Amount: 10000      Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 2     Payer: master          Receiver: store_1         Amount: 10000      Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 3     Payer: master          Receiver: store_1         Amount: 10000      Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 4     Payer: master          Receiver: store_1         Amount: 10000      Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 5     Payer: master          Receiver: bob             Amount: 1000       Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 6     Payer: master          Receiver: bob             Amount: 1000       Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 7     Payer: master          Receiver: alice           Amount: 10         Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 8     Payer: master          Receiver: alice           Amount: 10         Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 9     Payer: master          Receiver: george          Amount: 1000       Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+Transaction ID: 10    Payer: master          Receiver: george          Amount: 1000       Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+ACCOUNT        BALANCE        
+store_1        40000          
+bob            2000           
+alice          20             
+george         2000           
+john           0              
+master         2147439627     
+
+
+# --- GET TRANSACTION ---
+get-transaction 10
+Transaction ID: 10    Payer: master          Receiver: george          Amount: 1000       Fee: 10         Note: fund account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+# --- VALIDATE BLOCK ---
+validate
+Successfully validated sum of account balances for block 1
+Validation of the current state of the blockchain completed successfully.
+
+# --- SHOW STORE ---
+show-store STORE_1
+Store ID: store_1         Name: ralphs          Address: 101 g st, san diego, ca 92101 
+
+
+# --- AISLE COMMANDS ---
+# Define FLOOR aisles
+define-aisle  STORE_1:AISLE_F1  name  AISLE_F1  description  DAIRY_AISLE location  FLOOR
+aisle_f1 created.
+
+define-aisle  STORE_1:AISLE_F2  name  AISLE_F2  description  BAKERY_AISLE location  FLOOR
+aisle_f2 created.
+
+define-aisle  STORE_1:AISLE_F3  name  AISLE_F3  description  BEVERAGE_AISLE location  FLOOR
+aisle_f3 created.
+
+# Define STORE_ROOM aisles
+define-aisle  STORE_1:AISLE_S1  name  AISLE_S1  description  DAIRY_AISLE location  STORE_ROOM
+aisle_s1 created.
+
+define-aisle  STORE_1:AISLE_S2  name  AISLE_S2  description  BAKERY_AISLE location  STORE_ROOM
+aisle_s2 created.
+
+define-aisle  STORE_1:AISLE_S3  name  AISLE_S3  description  BEVERAGE_AISLE location  STORE_ROOM
+aisle_s3 created.
+
+# Define CHECKOUT_AREA aisles 
+define-aisle  STORE_1:CHECKOUT_AREA_1  name  CHECKOUT_AREA_1  description  CHECKOUT_AREA_1 location  FLOOR
+checkout_area_1 created.
+
+define-aisle  STORE_1:CHECKOUT_AREA_2  name  CHECKOUT_AREA_2  description  CHECKOUT_AREA_2 location  FLOOR
+checkout_area_2 created.
+
+define-aisle  STORE_1:CHECKOUT_AREA_3  name  CHECKOUT_AREA_3  description  CHECKOUT_AREA_3 location  FLOOR
+checkout_area_3 created.
+
+# Show aisle
+show-aisle STORE_1:AISLE_F3
+Aisle ID: aisle_f3   Name: aisle_f3   Description: beverage_aisle       Location: FLOOR     
+
+# --- SHELF COMMANDS ---
+# Define FLOOR shelves
+define-shelf  STORE_1:AISLE_F1:SHELF_F1  name  SHELF_F1  level  low   description  "MILK" temperature  REFRIGERATED
+shelf_f1 created.
+
+define-shelf  STORE_1:AISLE_F1:SHELF_F2  name  SHELF_F2  level  medium   description  "CHEESE" temperature  REFRIGERATED
+shelf_f2 created.
+
+define-shelf  STORE_1:AISLE_F1:SHELF_F3  name  SHELF_F3  level  high   description  "EGG" temperature  REFRIGERATED
+shelf_f3 created.
+
+define-shelf  STORE_1:AISLE_F2:SHELF_F4  name  SHELF_F4  level  low   description  "BAGEL" 
+shelf_f4 created.
+
+define-shelf  STORE_1:AISLE_F2:SHELF_F5  name  SHELF_F5  level  medium   description  "BAGUETTE" 
+shelf_f5 created.
+
+define-shelf  STORE_1:AISLE_F2:SHELF_F6  name  SHELF_F6  level  high   description  "MUFFIN" 
+shelf_f6 created.
+
+define-shelf  STORE_1:AISLE_F3:SHELF_F7  name  SHELF_F7  level  low   description  "COFFEE" 
+shelf_f7 created.
+
+define-shelf  STORE_1:AISLE_F3:SHELF_F8  name  SHELF_F8  level  medium   description  "TEA" 
+shelf_f8 created.
+
+define-shelf  STORE_1:AISLE_F3:SHELF_F9  name  SHELF_F9  level  high   description  "SMOOTHIE" REFRIGERATED
+shelf_f9 created.
+
+# Define STORE_ROOM shelves
+define-shelf  STORE_1:AISLE_S1:SHELF_S1  name  SHELF_S1  level  low   description  "MILK" temperature  REFRIGERATED
+shelf_s1 created.
+
+define-shelf  STORE_1:AISLE_S1:SHELF_S2  name  SHELF_S2  level  medium   description  "CHEESE" temperature  REFRIGERATED
+shelf_s2 created.
+
+define-shelf  STORE_1:AISLE_S1:SHELF_S3  name  SHELF_S3  level  high   description  "EGG" temperature  REFRIGERATED
+shelf_s3 created.
+
+define-shelf  STORE_1:AISLE_S2:SHELF_S4  name  SHELF_S4  level  low   description  "BAGEL" 
+shelf_s4 created.
+
+define-shelf  STORE_1:AISLE_S2:SHELF_S5  name  SHELF_S5  level  medium   description  "BAGUETTE" 
+shelf_s5 created.
+
+define-shelf  STORE_1:AISLE_S2:SHELF_S6  name  SHELF_S6  level  high   description  "MUFFIN" 
+shelf_s6 created.
+
+define-shelf  STORE_1:AISLE_S3:SHELF_S7  name  SHELF_S7  level  low   description  "COFFEE" 
+shelf_s7 created.
+
+define-shelf  STORE_1:AISLE_S3:SHELF_S8  name  SHELF_S8  level  medium   description  "TEA" 
+shelf_s8 created.
+
+define-shelf  STORE_1:AISLE_S3:SHELF_S9  name  SHELF_S9  level  high   description  "SMOOTHIE" REFRIGERATED
+shelf_s9 created.
+
+# Show shelf
+show-shelf  STORE_1:AISLE_F3:SHELF_F9
+Shelf ID: shelf_f9   Name: shelf_f9   Level: HIGH   Description: smoothie             Temperature: AMBIENT     
+
+
+# --- PRODUCT COMMANDS ---
+# Define products
+define-product PRODUCT_1 name MILK description "ORGANIC MILK" weight 128 category DAIRY unit_price 4 temperature REFRIGERATED
+product_1 created.
+
+define-product PRODUCT_2 name CHEESE description "CHEDDAR CHEESE" weight 8 category DAIRY unit_price 3 temperature REFRIGERATED
+product_2 created.
+
+define-product PRODUCT_3 name EGG description "CAGE FREE EGGS" weight 16 category DAIRY unit_price 6 temperature REFRIGERATED
+product_3 created.
+
+define-product PRODUCT_4 name BAGEL description "PLAIN BAGELS" weight 16 category BAKERY unit_price 5 temperature AMBIENT
+product_4 created.
+
+define-product PRODUCT_5 name BAGUETTE description "FRENCH BAGUETTE" weight 12 category BAKERY unit_price 3 temperature AMBIENT
+product_5 created.
+
+define-product PRODUCT_6 name MUFFIN description "BLUEBERRY MUFFINS" weight 16 category BAKERY unit_price 6 temperature AMBIENT
+product_6 created.
+
+define-product PRODUCT_7 name COFFEE description "FRENCH ROAST COFFEE" weight 32 category BEVERAGE unit_price 11 temperature AMBIENT
+product_7 created.
+
+define-product PRODUCT_8 name TEA description "GREEN TEA" weight 4 category BEVERAGE unit_price 2 temperature AMBIENT
+product_8 created.
+
+define-product PRODUCT_9 name SMOOTHIE description "STRAWBERRY SMOOTHIE" weight 16 category BEVERAGE unit_price 7 temperature REFRIGERATED
+product_9 created.
+
+# Show product
+show-product PRODUCT_9
+Product ID: product_9       Name: smoothie        Description: strawberry smoothie  Size: 16.0            Category: beverage        Unit Price: 7               Temperature: REFRIGERATED   
+
+
+# --- INVENTORY COMMANDS ---
+# Define FLOOR inventories
+define-inventory INVENTORY_FL_1 location STORE_1:AISLE_F1:SHELF_F1 capacity 10 count 10 product PRODUCT_1
+inventory_fl_1 created.
+
+define-inventory INVENTORY_FL_2 location STORE_1:AISLE_F1:SHELF_F2 capacity 10 count 10 product PRODUCT_2
+inventory_fl_2 created.
+
+define-inventory INVENTORY_FL_3 location STORE_1:AISLE_F1:SHELF_F3 capacity 10 count 10 product PRODUCT_3
+inventory_fl_3 created.
+
+define-inventory INVENTORY_FL_4 location STORE_1:AISLE_F2:SHELF_F4 capacity 10 count 10 product PRODUCT_4
+inventory_fl_4 created.
+
+define-inventory INVENTORY_FL_5 location STORE_1:AISLE_F2:SHELF_F5 capacity 10 count 10 product PRODUCT_5
+inventory_fl_5 created.
+
+define-inventory INVENTORY_FL_6 location STORE_1:AISLE_F2:SHELF_F6 capacity 10 count 10 product PRODUCT_6
+inventory_fl_6 created.
+
+define-inventory INVENTORY_FL_7 location STORE_1:AISLE_F3:SHELF_F7 capacity 10 count 10 product PRODUCT_7
+inventory_fl_7 created.
+
+define-inventory INVENTORY_FL_8 location STORE_1:AISLE_F3:SHELF_F8 capacity 10 count 10 product PRODUCT_8
+inventory_fl_8 created.
+
+define-inventory INVENTORY_FL_9 location STORE_1:AISLE_F3:SHELF_F9 capacity 10 count 10 product PRODUCT_9
+inventory_fl_9 created.
+
+# Define STORE_ROOM inventories
+define-inventory INVENTORY_SR_1 location STORE_1:AISLE_S1:SHELF_S1 capacity 10 count 10 product PRODUCT_1
+inventory_sr_1 created.
+
+define-inventory INVENTORY_SR_2 location STORE_1:AISLE_S1:SHELF_S2 capacity 10 count 10 product PRODUCT_2
+inventory_sr_2 created.
+
+define-inventory INVENTORY_SR_3 location STORE_1:AISLE_S1:SHELF_S3 capacity 10 count 10 product PRODUCT_3
+inventory_sr_3 created.
+
+define-inventory INVENTORY_SR_4 location STORE_1:AISLE_S2:SHELF_S4 capacity 10 count 10 product PRODUCT_4
+inventory_sr_4 created.
+
+define-inventory INVENTORY_SR_5 location STORE_1:AISLE_S2:SHELF_S5 capacity 10 count 10 product PRODUCT_5
+inventory_sr_5 created.
+
+define-inventory INVENTORY_SR_6 location STORE_1:AISLE_S2:SHELF_S6 capacity 10 count 10 product PRODUCT_6
+inventory_sr_6 created.
+
+define-inventory INVENTORY_SR_7 location STORE_1:AISLE_S3:SHELF_S7 capacity 10 count 10 product PRODUCT_7
+inventory_sr_7 created.
+
+define-inventory INVENTORY_SR_8 location STORE_1:AISLE_S3:SHELF_S8 capacity 10 count 10 product PRODUCT_8
+inventory_sr_8 created.
+
+define-inventory INVENTORY_SR_9 location STORE_1:AISLE_S3:SHELF_S9 capacity 10 count 10 product PRODUCT_9
+inventory_sr_9 created.
+
+# Show inventory
+show-inventory INVENTORY_FL_8
+Inventory ID: inventory_fl_8  Capacity: 10         Count: 10         Location: store_1:aisle_f3:shelf_f8 Product ID: product_8      
+
+# --- DEVICE COMMANDS ---
+define-device CAMERA_C1 name CAMERA_C1 type CAMERA location STORE_1:CHECKOUT_AREA_1
+camera_c1 created.
+
+define-device CAMERA_C2 name CAMERA_C2 type CAMERA location STORE_1:CHECKOUT_AREA_2
+camera_c2 created.
+
+define-device CAMERA_C3 name CAMERA_C3 type CAMERA location STORE_1:CHECKOUT_AREA_3
+camera_c3 created.
+
+define-device CAMERA_F1 name CAMERA_F1 type CAMERA location STORE_1:AISLE_F1
+camera_f1 created.
+
+define-device CAMERA_F2 name CAMERA_F2 type CAMERA location STORE_1:AISLE_F2
+camera_f2 created.
+
+define-device CAMERA_F3 name CAMERA_F3 type CAMERA location STORE_1:AISLE_F3
+camera_f3 created.
+
+define-device MICROPHONE_C1 name MICROPHONE_C1 type MICROPHONE location STORE_1:CHECKOUT_AREA_1
+microphone_c1 created.
+
+define-device MICROPHONE_C2 name MICROPHONE_C2 type MICROPHONE location STORE_1:CHECKOUT_AREA_2
+microphone_c2 created.
+
+define-device MICROPHONE_C3 name MICROPHONE_C3 type MICROPHONE location STORE_1:CHECKOUT_AREA_3
+microphone_c3 created.
+
+define-device MICROPHONE_F1 name MICROPHONE_F1 type MICROPHONE location STORE_1:AISLE_F1
+microphone_f1 created.
+
+define-device MICROPHONE_F2 name MICROPHONE_F2 type MICROPHONE location STORE_1:AISLE_F2
+microphone_f2 created.
+
+define-device MICROPHONE_F3 name MICROPHONE_F3 type MICROPHONE location STORE_1:AISLE_F3
+microphone_f3 created.
+
+define-device SPEAKER_C1 name SPEAKER_C1 type SPEAKER location STORE_1:CHECKOUT_AREA_1
+speaker_c1 created.
+
+define-device SPEAKER_C2 name SPEAKER_C2 type SPEAKER location STORE_1:CHECKOUT_AREA_2
+speaker_c2 created.
+
+define-device SPEAKER_C3 name SPEAKER_C3 type SPEAKER location STORE_1:CHECKOUT_AREA_3
+speaker_c3 created.
+
+define-device SPEAKER_F1 name SPEAKER_F1 type SPEAKER location STORE_1:AISLE_F1
+speaker_f1 created.
+
+define-device SPEAKER_F2 name SPEAKER_F2 type SPEAKER location STORE_1:AISLE_F2
+speaker_f2 created.
+
+define-device SPEAKER_F3 name SPEAKER_F3 type SPEAKER location STORE_1:AISLE_F3
+speaker_f3 created.
+
+define-device ROBOT_1 name ROBOT_1 type ROBOT location STORE_1:AISLE_F1
+robot_1 created.
+
+define-device ROBOT_2 name ROBOT_2 type ROBOT location STORE_1:AISLE_F2
+robot_2 created.
+
+define-device ROBOT_3 name ROBOT_3 type ROBOT location STORE_1:AISLE_F3
+robot_3 created.
+
+define-device ROBOT_4 name ROBOT_4 type ROBOT location STORE_1:CHECKOUT_AREA_1
+robot_4 created.
+
+define-device TURNSTILE_1 name TURNSTILE_1 type TURNSTILE location STORE_1:CHECKOUT_AREA_1
+turnstile_1 created.
+
+define-device TURNSTILE_2 name TURNSTILE_2 type TURNSTILE location STORE_1:CHECKOUT_AREA_2
+turnstile_2 created.
+
+define-device TURNSTILE_3 name TURNSTILE_3 type TURNSTILE location STORE_1:CHECKOUT_AREA_3
+turnstile_3 created.
+
+# Show device
+show-device ROBOT_1
+Device ID: robot_1         Name: robot_1         Address: store_1:aisle_f1
+
+# --- EVENTS ---
+# --- ENTER STORE EVENTS ---
+# CUSTOMER_R1 enters store 
+create-event TURNSTILE_1 event ENTER_STORE customer CUSTOMER_R1 faceprint --face:bob--
+debra logged out.
+controller logged in.
+Access granted. customer_r1 has an account balance of 2000.
+turnstile_1 opened.
+speaker_c1 Announcing: <<Hello bob, welcome to ralphs!>>
+BASKET_1 created
+BASKET_1 assigned to customer_r1
+customer_r1 entered store_1 and moved to checkout_area_1
+turnstile_1 closed.
+
+# CUSTOMER_R2 enters store 
+create-event TURNSTILE_2 event ENTER_STORE customer CUSTOMER_R2 faceprint --face:alice--
+Access granted. customer_r2 has an account balance of 20.
+turnstile_2 opened.
+speaker_c2 Announcing: <<Hello alice, welcome to ralphs!>>
+BASKET_2 created
+BASKET_2 assigned to customer_r2
+customer_r2 entered store_1 and moved to checkout_area_2
+turnstile_2 closed.
+
+# --- CUSTOMER SEEN EVENTS ---
+# CUSTOMER_R1 moves to AISLE_F1
+create-event CAMERA_F1 event CUSTOMER_SEEN customer CUSTOMER_R1 in STORE_1:AISLE_F1
+customer_r1 moved from checkout_area_1 to aisle_f1
+
+# CUSTOMER_R2 moves to AISLE_F2
+create-event CAMERA_F2 event CUSTOMER_SEEN customer CUSTOMER_R2 in STORE_1:AISLE_F2
+customer_r2 moved from checkout_area_2 to aisle_f2
+
+# --- BASKET EVENTS ---
+# CUSTOMER_R1 adds 2 of PRODUCT_1 to his basket
+create-event CAMERA_F1 event BASKET customer CUSTOMER_R1 product PRODUCT_1 from AISLE_F1:SHELF_F1 count 2
+The number of products in inventory_fl_1 changed from 10 to 8
+The number of product_1 in BASKET_1 changed from 0 to 2
+Inventory Level: 80.0%
+
+# CUSTOMER_R1 adds 2 of PRODUCT_2 to his basket
+create-event CAMERA_F1 event BASKET customer CUSTOMER_R1 product PRODUCT_2 from AISLE_F1:SHELF_F2 count 2
+The number of products in inventory_fl_2 changed from 10 to 8
+The number of product_2 in BASKET_1 changed from 0 to 2
+Inventory Level: 80.0%
+
+# CUSTOMER_R1 adds 2 of PRODUCT_3 to his basket
+create-event CAMERA_F1 event BASKET customer CUSTOMER_R1 product PRODUCT_3 from AISLE_F1:SHELF_F3 count 2
+The number of products in inventory_fl_3 changed from 10 to 8
+The number of product_3 in BASKET_1 changed from 0 to 2
+Inventory Level: 80.0%
+
+# Show contents of CUSTOMER_R1's basket. It should contain 2 items of PRODUCT_1, 2 items of PRODUCT_2, and 2 items of PRODUCT_3
+get-customer-basket CUSTOMER_R1
+Basket ID: BASKET_1  
+PRODUCT_ID     NAME           DESCRIPTION         SIZE           CATEGORY       UNIT_PRICE     TEMPERATURE    QUANTITY       TOTAL_PRICE    
+product_2      cheese         cheddar cheese      8.0            dairy          3              REFRIGERATED   2              6              
+product_3      egg            cage free eggs      16.0           dairy          6              REFRIGERATED   2              12             
+product_1      milk           organic milk        128.0          dairy          4              REFRIGERATED   2              8              
+
+# CUSTOMER_R1 removes 2 of PRODUCT_3 from his basket
+create-event CAMERA_F1 event BASKET customer CUSTOMER_R1 product PRODUCT_3 from AISLE_F1:SHELF_F3 count -2
+The number of product_3 in BASKET_1 changed from 2 to 0
+The number of products in inventory_fl_3 changed from 8 to 10
+
+# Show contents of CUSTOMER_R1's basket. It should contain 2 items of PRODUCT_1 and 2 items of PRODUCT_2
+get-customer-basket CUSTOMER_R1
+Basket ID: BASKET_1  
+PRODUCT_ID     NAME           DESCRIPTION         SIZE           CATEGORY       UNIT_PRICE     TEMPERATURE    QUANTITY       TOTAL_PRICE    
+product_2      cheese         cheddar cheese      8.0            dairy          3              REFRIGERATED   2              6              
+product_1      milk           organic milk        128.0          dairy          4              REFRIGERATED   2              8              
+
+# CUSTOMER_R2 adds 6 of PRODUCT_4 to her basket. The shelf should be restocked because the inventory level drops below 50%.
+create-event CAMERA_F2 event BASKET customer CUSTOMER_R2 product PRODUCT_4 from AISLE_F2:SHELF_F4 count 6
+The number of products in inventory_fl_4 changed from 10 to 4
+The number of product_4 in BASKET_2 changed from 0 to 6
+Inventory Level: 40.0%
+robot_2 moved from aisle_f2 to aisle_s2
+robot_2 picked up 6 of product_4 from inventory_sr_4 in aisle_s2:shelf_s4
+The number of products in inventory_sr_4 changed from 10 to 4
+robot_2 moved from aisle_s2 to aisle_f2
+robot_2 added 6 of product_4 to inventory_fl_4 in aisle_f2:shelf_f4
+The number of products in inventory_fl_4 changed from 4 to 10
+
+# Show inventory for INVENTORY_FL_4. It should include 10 items.
+show-inventory INVENTORY_FL_4
+Inventory ID: inventory_fl_4  Capacity: 10         Count: 10         Location: store_1:aisle_f2:shelf_f4 Product ID: product_4      
+
+# CUSTOMER_R2 adds 6 more items of PRODUCT_4 to her basket. The shelf should be restocked because the inventory level drops below 50%. 
+# But only 4 items of PRODUCT_4 left in the STORE_ROOM. Hence the new inventory count will be 4+4=8.
+create-event CAMERA_F2 event BASKET customer CUSTOMER_R2 product PRODUCT_4 from AISLE_F2:SHELF_F4 count 6
+The number of products in inventory_fl_4 changed from 10 to 4
+The number of product_4 in BASKET_2 changed from 6 to 12
+Inventory Level: 40.0%
+robot_2 moved from aisle_f2 to aisle_s2
+robot_2 picked up 4 of product_4 from inventory_sr_4 in aisle_s2:shelf_s4
+The number of products in inventory_sr_4 changed from 4 to 0
+robot_2 moved from aisle_s2 to aisle_f2
+robot_2 added 4 of product_4 to inventory_fl_4 in aisle_f2:shelf_f4
+The number of products in inventory_fl_4 changed from 4 to 8
+
+# Show inventory for INVENTORY_FL_4. It should include 8 items.
+show-inventory INVENTORY_FL_4
+Inventory ID: inventory_fl_4  Capacity: 10         Count: 8          Location: store_1:aisle_f2:shelf_f4 Product ID: product_4      
+
+# Show contents of CUSTOMER_R2's basket. It should contain 12 items of PRODUCT_4
+get-customer-basket CUSTOMER_R2
+Basket ID: BASKET_2  
+PRODUCT_ID     NAME           DESCRIPTION         SIZE           CATEGORY       UNIT_PRICE     TEMPERATURE    QUANTITY       TOTAL_PRICE    
+product_4      bagel          plain bagels        16.0           bakery         5              AMBIENT        12             60             
+
+# --- CLEANING EVENT ---
+# A ROBOT_2 should clean up AISLE_F2, because ROBOT_2 is already in AISLE_F2
+create-event CAMERA_F2 event CLEANING product PRODUCT_5 in STORE_1:AISLE_F2
+robot_2 cleaned up product_5 in aisle_f2
+
+# --- BROKEN GLASS EVENT ---
+# A ROBOT_3 should clean up AISLE_F3, because ROBOT_3 is already in AISLE_F3
+create-event MICROPHONE_F2 event BROKEN_GLASS in STORE_1:AISLE_F3
+robot_3 cleaned up broken glass in aisle_f3
+
+# --- MISSING PERSON EVENT ---
+# First lets move CUSTOMER_R2 to AISLE_F3
+create-event CAMERA_F3 event CUSTOMER_SEEN customer CUSTOMER_R2 in STORE_1:AISLE_F3 
+customer_r2 moved from aisle_f2 to aisle_f3
+
+# CUSTOMER_R1 asks MICROPHONE_F2 the location of CUSTOMER_R1. CUSTOMER_R1 is located in AISLE_F3
+create-event MICROPHONE_F1 event MISSING_PERSON can you help me find CUSTOMER_R2 voiceprint --voice:bob--
+speaker_f1 Announcing: <<customer_r2 is in store_1:aisle_f3>>
+
+# --- FETCH PRODUCT EVENTS ---
+# CUSTOMER_R1 requests PRODUCT_9 from MICROPHONE_F1
+create-event MICROPHONE_F1 event FETCH_PRODUCT customer CUSTOMER_R1 product PRODUCT_9 count 3 voiceprint --voice:bob--
+robot_1 moved from aisle_f1 to aisle_f3
+robot_1 picked up 3 of product_9 from inventory_fl_9 in aisle_f3:shelf_f9
+The number of products in inventory_fl_9 changed from 10 to 7
+robot_1 moved from aisle_f3 to aisle_f1
+robot_1 brought 3 of product_9 to aisle_f1
+The number of product_9 in BASKET_1 changed from 0 to 3
+
+# --- CHECK ACCOUNT BALANCE EVENTS ---
+# CUSTOMER_R1 asks for his total basket value.
+create-event MICROPHONE_F1 event CHECK_ACCOUNT_BALANCE customer CUSTOMER_R1 voiceprint --voice:bob--
+The total value of items in BASKET_1 is 35
+speaker_f1 Announcing: <<Total value of basket items is 35 which is less than your account balance of 2000>>
+
+# --- CHECKOUT EVENT ---
+# CUSTOMER_R2 moves to CHECKOUT_AREA_3
+create-event CAMERA_F2 event CUSTOMER_SEEN customer CUSTOMER_R2 in STORE_1:CHECKOUT_AREA_3
+customer_r2 moved from aisle_f3 to checkout_area_3
+
+# This should notify the customer that she does not have enough funds
+create-event TURNSTILE_3 event CHECKOUT customer CUSTOMER_R2 faceprint --face:alice--
+The total value of items in BASKET_2 is 60
+customer_r2 has an account balance of 20.
+speaker_c3 Announcing: <<You do not have enough funds to cover your basket total.>>
+
+# --- PROCESS TRANSACTIONS ---
+# CUSTOMER_R1 (BOB) sends CUSTOMER_R2 (ALICE) 100 units in 10 transactions
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 11
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 12
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 13
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 14
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 15
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 16
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 17
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 18
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 19
+
+process-transaction amount 10 fee 10 note "fund account" payer BOB receiver ALICE
+Received Transaction 20
+Block 2 committed successfully.
+
+# ALICE should have a balance of 20+100=120 units
+get-account-balance ALICE
+alice has a balance of 120
+
+# CUSTOMER_R2 should be able to pay and leave the store. Also a robot should assist CUSTOMER_R2 to car because the total weight of basket items is > 10lbs
+create-event TURNSTILE_3 event CHECKOUT customer CUSTOMER_R2 faceprint --face:alice--
+The total value of items in BASKET_2 is 60
+customer_r2 has an account balance of 120.
+Received Transaction 21
+Transaction ID: 21    Payer: alice           Receiver: store_1         Amount: 60         Fee: 10         Note: Transaction for customer_r2 at 2021-11-14 19:44:59.106                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+turnstile_3 opened.
+speaker_c3 Announcing: <<Goodbye alice, thanks for shopping at ralphs!>>
+turnstile_3 closed.
+The total weight of items in BASKET_2 is 12 lbs and 0.0 oz.
+Robot assistance required.
+robot_2 moved from aisle_f2 to checkout_area_3
+robot_2 assisting alice to car.
+robot_2 left store_1
+customer_r2 left store_1
+robot_2 entered store_1 and moved to checkout_area_3
+
+# --- EMERGENCY EVENT ---
+# Fire event. All turnstiles will be opened, all speakers will announce an emergency message.
+# A robot will address the emergency while the rest of the robots will assist customers exit the store.
+# CUSTOMER_R1's basket will be cleared and he will leave the store.
+# Finally, turnstiles will be closed.
+create-event CAMERA_F2 event EMERGENCY type FIRE in AISLE_F2
+turnstile_2 opened.
+turnstile_1 opened.
+turnstile_3 opened.
+speaker_f2 Announcing: <<There is a FIRE in aisle_f2, please leave store_1 immediately>>
+speaker_f3 Announcing: <<There is a FIRE in aisle_f2, please leave store_1 immediately>>
+speaker_f1 Announcing: <<There is a FIRE in aisle_f2, please leave store_1 immediately>>
+speaker_c3 Announcing: <<There is a FIRE in aisle_f2, please leave store_1 immediately>>
+speaker_c1 Announcing: <<There is a FIRE in aisle_f2, please leave store_1 immediately>>
+speaker_c2 Announcing: <<There is a FIRE in aisle_f2, please leave store_1 immediately>>
+robot_2 moved from checkout_area_3 to aisle_f2
+robot_2 addressing FIRE emergency in aisle_f2.
+robot_1 assisting customers exit store_1
+robot_4 assisting customers exit store_1
+robot_3 assisting customers exit store_1
+Cleared all items in BASKET_1
+customer_r1 left store_1
+turnstile_2 closed.
+turnstile_1 closed.
+turnstile_3 closed.
